@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aryan Sarvaiya - Cloud & DevOps Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --heading-color: #003366;
+            --body-color: #1a1a1a;
+            --accent-color: #00bcd4;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%);
+            color: var(--body-color);
+            overflow-x: hidden;
+        }
+
+        /* --- Custom Colors for Tailwind --- */
+        .text-heading { color: var(--heading-color); }
+        .text-accent { color: var(--accent-color); }
+        .bg-accent { background-color: var(--accent-color); }
+
+        /* --- Glassmorphism --- */
+        .glassmorphic {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 1rem;
+        }
+
+        /* --- Navbar Scroll Effect --- */
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Active Nav Link --- */
+        .nav-link.active {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        /* --- RGB Glow Animation --- */
+        @keyframes rgb-glow {
+            0% { box-shadow: 0 0 5px #ff0000, 0 0 10px #ff7f00, 0 0 15px #ffff00; }
+            25% { box-shadow: 0 0 5px #00ff00, 0 0 10px #00ffff, 0 0 15px #007fff; }
+            50% { box-shadow: 0 0 5px #0000ff, 0 0 10px #7f00ff, 0 0 15px #ff00ff; }
+            75% { box-shadow: 0 0 5px #ff007f, 0 0 10px #ff0000, 0 0 15px #ff7f00; }
+            100% { box-shadow: 0 0 5px #ffff00, 0 0 10px #00ff00, 0 0 15px #00ffff; }
+        }
+
+        .rgb-glow {
+            animation: rgb-glow 8s linear infinite;
+        }
+        
+        .rgb-glow-hover:hover {
+             animation: rgb-glow 4s linear infinite;
+        }
+
+        /* --- Cloud Animations --- */
+        #clouds-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .cloud {
+            position: absolute;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggNDAiPjxwYXRoIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC44IiBkPSJNMTE5LjcgMTkuM2MtLjktNS4yLTUuNC05LjEtMTAuOC05LjEtMi4yIDAtNC4yLjctNS45IDEuOC0yLjQtMy45LTYuNy02LjUtMTEuNS02LjUtNi44IDAtMTIuNSA0LjgtMTQuMSAxMS4yQzc2LjIgMTIuMyA3Mi4xIDkgNjcgOS4xYy02LjYgMC0xMiA1LjItMTIuMyAxMS44LTIuMy0yLjgtNS42LTQuNS05LjItNC41LTUuOSAwLTEwLjcgNC44LTEwLjcgMTAuNyAwIC4zIDAgLjYgLjEgLjktMy43IDEuNC02LjMgNS02LjMgOS4yIDAgNS4zIDQuMyA5LjYgOS42IDkuNmwxMDEuOC4xYzUuNiAwIDEwLjEtNC41IDEwLjEtMTAuMS4xLTMuOS0yLjEtNy40LTUuNC05LjF6Ii8+PC9zdmc+') no-repeat;
+            background-size: contain;
+            animation: drift linear infinite;
+        }
+
+        @keyframes drift {
+            from { transform: translateX(-150%); }
+            to { transform: translateX(150vw); }
+        }
+
+        /* --- Section Fade-in Animation --- */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* --- Modal --- */
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+
+    </style>
+</head>
+<body class="antialiased relative">
+
+    <!-- Cloud Background -->
+    <div id="clouds-container"></div>
+
+    <!-- Header & Navigation -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-heading">Aryan</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link text-lg text-heading hover:text-accent transition-colors duration-300">Home</a>
+                <a href="#about" class="nav-link text-lg text-heading hover:text-accent transition-colors duration-300">About</a>
+                <a href="#skills" class="nav-link text-lg text-heading hover:text-accent transition-colors duration-300">Skills</a>
+                <a href="#certifications" class="nav-link text-lg text-heading hover:text-accent transition-colors duration-300">Certifications</a>
+                <a href="#resume" class="nav-link text-lg text-heading hover:text-accent transition-colors duration-300">Resume</a>
+                <a href="#contact" class="nav-link text-lg text-heading hover:text-accent transition-colors duration-300">Contact</a>
+            </div>
+             <button id="mobile-menu-button" class="md:hidden text-heading">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/50 backdrop-blur-sm">
+            <a href="#home" class="block py-2 px-4 text-sm text-heading hover:bg-cyan-100">Home</a>
+            <a href="#about" class="block py-2 px-4 text-sm text-heading hover:bg-cyan-100">About</a>
+            <a href="#skills" class="block py-2 px-4 text-sm text-heading hover:bg-cyan-100">Skills</a>
+            <a href="#certifications" class="block py-2 px-4 text-sm text-heading hover:bg-cyan-100">Certifications</a>
+            <a href="#resume" class="block py-2 px-4 text-sm text-heading hover:bg-cyan-100">Resume</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-heading hover:bg-cyan-100">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pt-24">
+
+       <!-- Home/Hero Section -->
+<section id="home" class="min-h-screen flex items-center justify-center text-center fade-in-section">
+    <div>
+        <h1 class="text-4xl md:text-6xl font-black text-heading leading-tight">
+            Hi, I’m Aryan Sarvaiya,<br>
+            <span class="text-3xl md:text-5xl">Cloud & DevOps Enthusiast.</span>
+        </h1>
+        <p class="mt-6 text-xl text-gray-800">
+            ☁ Building scalable, reliable, and secure cloud solutions.
+        </p>
+    </div>
+</section>
+
+
+        <!-- About Section -->
+        <section id="about" class="py-20 fade-in-section">
+            <h2 class="text-4xl font-bold text-center text-heading mb-12">About Me</h2>
+            <div class="max-w-3xl mx-auto glassmorphic p-8 shadow-xl">
+                <p class="text-lg leading-relaxed text-gray-800">Final-year student at Marwadi University, specializing in Cloud Computing and DevOps. I am highly enthusiastic about learning new technologies, building scalable and reliable solutions, and automating workflows to improve efficiency. I have hands-on experience with cloud platforms, containerization, and CI/CD practices, and I am always eager to explore innovative tools and methodologies. My goal is to grow as a skilled Cloud and DevOps professional, contribute to impactful projects, and continuously expand my knowledge in the field.
+                </p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 fade-in-section">
+            <h2 class="text-4xl font-bold text-center text-heading mb-12">Core Skills & Tools</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+                <!-- Skill Card -->
+                <div class="glassmorphic p-6 flex flex-col items-center justify-center aspect-square shadow-lg transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="h-16 mb-4">
+                    <p class="font-bold text-heading">AWS</p>
+                     <div class="absolute inset-0 rounded-2xl bg-cyan-300/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="box-shadow: 0 0 15px var(--accent-color);"></div>
+                </div> 
+                <!-- Skill Card -->
+                <div class="glassmorphic p-6 flex flex-col items-center justify-center aspect-square shadow-lg transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="Docker" class="h-16 mb-4">
+                    <p class="font-bold text-heading">Docker</p>
+                    <div class="absolute inset-0 rounded-2xl bg-cyan-300/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="box-shadow: 0 0 15px var(--accent-color);"></div>
+                </div>
+                <!-- Skill Card -->
+                <div class="glassmorphic p-6 flex flex-col items-center justify-center aspect-square shadow-lg transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="Linux" class="h-16 mb-4">
+                    <p class="font-bold text-heading">Linux</p>
+                    <div class="absolute inset-0 rounded-2xl bg-cyan-300/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="box-shadow: 0 0 15px var(--accent-color);"></div>
+                </div>
+                <!-- Skill Card -->
+                <div class="glassmorphic p-6 flex flex-col items-center justify-center aspect-square shadow-lg transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original-wordmark.svg" alt="Git" class="h-16 mb-4">
+                    <p class="font-bold text-heading">Git</p>
+                    <div class="absolute inset-0 rounded-2xl bg-cyan-300/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="box-shadow: 0 0 15px var(--accent-color);"></div>
+                </div>
+                <!-- Skill Card -->
+                <div class="glassmorphic p-6 flex flex-col items-center justify-center aspect-square shadow-lg transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="Jenkins" class="h-16 mb-4">
+                    <p class="font-bold text-heading">Jenkins</p>
+                    <div class="absolute inset-0 rounded-2xl bg-cyan-300/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="box-shadow: 0 0 15px var(--accent-color);"></div>
+                </div>
+                <!-- Skill Card -->
+                <div class="glassmorphic p-6 flex flex-col items-center justify-center aspect-square shadow-lg transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://www.vectorlogo.zone/logos/terraformio/terraformio-icon.svg" alt="Terraform" class="h-16 mb-4">
+                    <p class="font-bold text-heading">Terraform</p>
+                    <div class="absolute inset-0 rounded-2xl bg-cyan-300/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="box-shadow: 0 0 15px var(--accent-color);"></div>
+                </div>
+            </div>
+        </section>
+<!-- Certifications Section -->
+<section id="certifications" class="py-20 fade-in-section">
+    <h2 class="text-4xl font-bold text-center text-heading mb-12">Certifications</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- Certification Card -->
+        <a href="certificates/AWS Quest.jpg" target="_blank">
+            <div class="cert-card bg-white/50 p-6 rounded-lg shadow-lg text-center cursor-pointer transform hover:-translate-y-2 transition-transform duration-300">
+                <h3 class="text-xl font-bold text-heading">AWS Quest</h3>
+            </div>
+        </a>
+
+        <!-- Certification Card -->
+        <a href="certificates/AWS cloud Practitioner.jpg" target="_blank">
+            <div class="cert-card bg-white/50 p-6 rounded-lg shadow-lg text-center cursor-pointer transform hover:-translate-y-2 transition-transform duration-300">
+                <h3 class="text-xl font-bold text-heading">AWS Cloud Practitioner Essentials</h3>
+            </div>
+        </a>
+
+        <!-- Certification Card -->
+        <a href="certificates/the linux fundamental.jpg" target="_blank">
+            <div class="cert-card bg-white/50 p-6 rounded-lg shadow-lg text-center cursor-pointer transform hover:-translate-y-2 transition-transform duration-300">
+                <h3 class="text-xl font-bold text-heading">The Linux Foundation</h3>
+            </div>
+        </a>
+
+        <!-- Certification Card -->
+        <a href="certificates/google cloud engineering.jpg" target="_blank">
+            <div class="cert-card bg-white/50 p-6 rounded-lg shadow-lg text-center cursor-pointer transform hover:-translate-y-2 transition-transform duration-300">
+                <h3 class="text-xl font-bold text-heading">Google Cloud Engineering</h3>
+            </div>
+        </a>
+
+    </div>
+</section>
+
+        
+
+        <!-- Resume Section -->
+<section id="resume" class="py-20 text-center fade-in-section">
+    <h2 class="text-4xl font-bold text-center text-heading mb-12">Resume</h2>
+    <a href="certificates/Aryan_Sarvaiya_Resume.pdf" 
+       download="Aryan_Sarvaiya_Resume.pdf" 
+       class="inline-block bg-accent text-white font-bold text-xl px-12 py-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 rgb-glow-hover">
+        Click Here to Open
+    </a>
+</section>
+
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 fade-in-section">
+            <h2 class="text-4xl font-bold text-center text-heading mb-12">Get In Touch</h2>
+            <div class="flex justify-center items-center space-x-12">
+                 <a href="https://linkedin.com/in/yourprofile" target="_blank" class="text-heading hover:text-accent transition-transform transform hover:scale-110 duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <a href="https://github.com/yourprofile" target="_blank" class="text-heading hover:text-accent transition-transform transform hover:scale-110 duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+<footer class="mt-20">
+    <div class="h-1 bg-gradient-to-r from-transparent via-accent to-transparent"></div>
+    <div class="container mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+        <p class="text-gray-700">&copy; 2024 Aryan Sarvaiya. All Rights Reserved.</p>
+        <div class="flex space-x-4 mt-4 md:mt-0">
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/aryan-sarvaiya-%E2%98%81%EF%B8%8F-a4a5b4335?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
+               target="_blank" 
+               class="text-gray-700 hover:text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                     class="feather feather-linkedin">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 
+                             2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 
+                             6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+            </a>
+
+            <!-- GitHub -->
+            <a href="https://github.com/Aryansarvaiya13" 
+               target="_blank" 
+               class="text-gray-700 hover:text-accent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                     viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                     class="feather feather-github">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 
+                             6v-3.87a3.37 3.37 0 0 
+                             0-.94-2.61c3.14-.35 
+                             6.44-1.54 6.44-7A5.44 
+                             5.44 0 0 0 20 4.77 
+                             5.07 5.07 0 0 0 19.91 
+                             1S18.73.65 16 2.48a13.38 
+                             13.38 0 0 0-7 
+                             0C6.27.65 5.09 1 5.09 
+                             1A5.07 5.07 0 0 0 5 
+                             4.77a5.44 5.44 0 0 
+                             0-1.5 3.78c0 5.42 
+                             3.3 6.61 6.44 7A3.37 
+                             3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+            </a>
+
+        </div>
+    </div>
+</footer>
+
+    
+    <!-- Certification Modal -->
+    <div id="certModal" class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
+        <div class="bg-white p-4 rounded-lg max-w-4xl max-h-full overflow-auto relative">
+            <button id="closeModal" class="absolute top-2 right-4 text-3xl font-bold text-gray-700 hover:text-black">&times;</button>
+            <img id="modalImg" src="" alt="Certification" class="w-full h-auto rounded">
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Cloud Generation ---
+            const cloudsContainer = document.getElementById('clouds-container');
+            const numClouds = 15;
+            for (let i = 0; i < numClouds; i++) {
+                const cloud = document.createElement('div');
+                cloud.className = 'cloud';
+                const size = Math.random() * 150 + 50; // width between 50 and 200px
+                cloud.style.width = `${size}px`;
+                cloud.style.height = `${size / 2}px`; // maintain aspect ratio
+                cloud.style.top = `${Math.random() * 100}%`;
+                cloud.style.opacity = Math.random() * 0.5 + 0.3; // opacity between 0.3 and 0.8
+                cloud.style.animationDuration = `${Math.random() * 80 + 40}s`; // duration between 40 and 120s
+                cloud.style.animationDelay = `${Math.random() * -120}s`; // start at random positions
+                cloudsContainer.appendChild(cloud);
+            }
+
+            // --- Navbar Scroll Effect ---
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('glassmorphic', 'nav-scrolled');
+                } else {
+                    navbar.classList.remove('glassmorphic', 'nav-scrolled');
+                }
+            });
+            
+             // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            mobileMenu.addEventListener('click', (e) => {
+                 if(e.target.tagName === 'A'){
+                     mobileMenu.classList.add('hidden');
+                 }
+            });
+
+            // --- Section Fade-in Animation ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // --- Active Nav Link Highlighting ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const allSections = document.querySelectorAll('section');
+            const navObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, {
+                rootMargin: '-30% 0px -70% 0px' // highlights when section is in the middle 40% of the screen
+            });
+            allSections.forEach(section => {
+                navObserver.observe(section);
+            });
+
+
+            // --- Certification Modal ---
+            const modal = document.getElementById('certModal');
+            const modalImg = document.getElementById('modalImg');
+            const closeModal = document.getElementById('closeModal');
+
+            document.querySelectorAll('.cert-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const imgSrc = card.getAttribute('data-img-src');
+                    modalImg.src = imgSrc;
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                });
+            });
+
+            const hideModal = () => {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            closeModal.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    hideModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
